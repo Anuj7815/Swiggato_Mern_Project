@@ -16,10 +16,10 @@ const CheckoutForm = ({ price, cart }) => {
     const [clientSecret, setClientSecret] = useState("");
 
     useEffect(() => {
-        if (typeof price !== "number" || price < 1) {
-            console.log("Price is Not a Number");
-            return;
-        }
+        // if (typeof price !== "number" || price < 1) {
+        //     console.log("Price is Not a Number");
+        //     return;
+        // }
         axiosSecure.post("/create-payment-intent", { price }).then((res) => {
             console.log(res.data.clientSecret);
             setClientSecret(res.data.clientSecret);
@@ -70,27 +70,27 @@ const CheckoutForm = ({ price, cart }) => {
 
         console.log(paymentIntent);
 
-        // if (paymentIntent.status === "succeeded") {
-        //     console.log(paymentIntent.id);
-        //     setCardError(`Your transaction id is ${paymentIntent.id}`);
-        //     const paymentInfo = {
-        //         email: user.email,
-        //         transitionId: paymentIntent.id,
-        //         price,
-        //         quantity: cart.length,
-        //         status: "Order pending",
-        //         itemName: cart.map((item) => item.name),
-        //         cartItems: cart.map((item) => item._id),
-        //         menuitems: cart.map((item) => item.menuItemId),
-        //     };
-        //     console.log(paymentInfo);
-        //     // send info to backend
-        //     axiosSecure.post("/payments", paymentInfo).then((res) => {
-        //         console.log(res.data);
-        //         navigate("/order");
-        //         alert("payment successfull");
-        //     });
-        // }
+        if (paymentIntent.status === "succeeded") {
+            console.log(paymentIntent.id);
+            setCardError(`Your transaction id is ${paymentIntent.id}`);
+            const paymentInfo = {
+                email: user.email,
+                transitionId: paymentIntent.id,
+                price,
+                quantity: cart.length,
+                status: "Order pending",
+                itemName: cart.map((item) => item.name),
+                cartItems: cart.map((item) => item._id),
+                menuitems: cart.map((item) => item.menuItemId),
+            };
+            console.log(paymentInfo);
+            // send info to backend
+            axiosSecure.post("/payments", paymentInfo).then((res) => {
+                console.log(res.data);
+                navigate("/order");
+                alert("payment successfull");
+            });
+        }
     };
     return (
         <div className="flex flex-col sm:flex-row justify-start gap-8">

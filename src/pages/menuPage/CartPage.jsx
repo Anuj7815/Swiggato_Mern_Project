@@ -33,21 +33,21 @@ const CartPage = () => {
             );
             console.log(response);
 
-            // if (response.ok) {
-            //     const updatedCart = cartItems.map((cartItem) => {
-            //         if (cartItem.id === item.id) {
-            //             return {
-            //                 ...cartItem,
-            //                 quantity: cartItem.quantity + 1,
-            //             };
-            //         }
-            //         return cartItem;
-            //     });
-            //     await refetch();
-            //     setCartItems(updatedCart);
-            // } else {
-            //     console.error("Failed to update quantity");
-            // }
+            if (response.ok) {
+                const updatedCart = cartItems.map((cartItem) => {
+                    if (cartItem.id === item.id) {
+                        return {
+                            ...cartItem,
+                            quantity: cartItem.quantity + 1,
+                        };
+                    }
+                    return cartItem;
+                });
+                await refetch();
+                setCartItems(updatedCart);
+            } else {
+                console.error("Failed to update quantity");
+            }
         } catch (error) {
             console.error("Error updating quantity:", error);
         }
@@ -68,21 +68,21 @@ const CartPage = () => {
                 );
                 // console.log(response);
 
-                // if (response.ok) {
-                //     const updatedCart = cartItems.map((cartItem) => {
-                //         if (cartItem.id === item.id) {
-                //             return {
-                //                 ...cartItem,
-                //                 quantity: cartItem.quantity - 1,
-                //             };
-                //         }
-                //         return cartItem;
-                //     });
-                //     await refetch();
-                //     setCartItems(updatedCart);
-                // } else {
-                //     console.error("Failed to update quantity");
-                // }
+                if (response.ok) {
+                    const updatedCart = cartItems.map((cartItem) => {
+                        if (cartItem.id === item.id) {
+                            return {
+                                ...cartItem,
+                                quantity: cartItem.quantity - 1,
+                            };
+                        }
+                        return cartItem;
+                    });
+                    await refetch();
+                    setCartItems(updatedCart);
+                } else {
+                    console.error("Failed to update quantity");
+                }
             } catch (error) {
                 console.error("Error updating quantity:", error);
             }
